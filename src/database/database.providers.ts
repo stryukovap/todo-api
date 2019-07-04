@@ -4,6 +4,6 @@ export const databaseProviders = [
   {
     provide: 'DATABASE_CONNECTION',
     useFactory: async (): Promise<typeof mongoose> =>
-      await mongoose.connect('mongodb://localhost/nest', { useNewUrlParser: true }),
+      await mongoose.connect('mongodb://raysael:XigyG4XYq2GWvnU@ds347467.mlab.com:47467/heroku_t4g0qnvp', { useNewUrlParser: true }),
   },
 ];
