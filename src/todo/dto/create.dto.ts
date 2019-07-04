@@ -8,6 +8,5 @@ export class CreateTodoDto {
     readonly title: string;
     @ApiModelProperty()
     readonly description: string;
-    @ApiModelProperty()
     readonly 'created_date': any;
 }
