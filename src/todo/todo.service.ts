@@ -6,22 +6,29 @@ import { UpdateTodoDto } from './dto/update.dto';
 
 @Injectable()
 export class TodoService {
-  constructor(@Inject('TODO_MODEL') private readonly todoModel: Model<Todo>) {}
+  constructor(@Inject('TODO_MODEL') private readonly todoModel: Model<Todo>) { }
 
   async create(createTodoDto: CreateTodoDto): Promise<Todo> {
     const createdTodo = this.todoModel(createTodoDto);
     return await createdTodo.save();
   }
 
-  async findAll(): Promise<Todo[]> {
-    return await this.todoModel.find().exec();
+  async findAll(author): Promise<Todo[]> {
+    return await this.todoModel.find({ author });
+  }
+
+  async findOne(id): Promise<Todo[]> {
+    return await this.todoModel.findOne({ _id: id });
   }
 
   async updateOne(id: string, updateTodoDto: UpdateTodoDto): Promise<Todo> {
-    return await this.todoModel.updateOne({_id: id}, updateTodoDto);
+    const res = await this.todoModel.updateOne({ _id: id }, updateTodoDto);
+    if (res.ok) {
+      return await this.todoModel.findOne({ _id: id });
+    }
   }
 
   async deleteOne(id: string): Promise<any> {
-    return await this.todoModel.deleteOne({_id: id});
+    await this.todoModel.deleteOne({ _id: id });
   }
 }
